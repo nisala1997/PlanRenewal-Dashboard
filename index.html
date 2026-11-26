@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>October 2026 | Daily Renewals</title>
+<style>
+:root{color-scheme:light;font:16px/1.5 system-ui,sans-serif;color:#14243c;background:#eef3f9;--blue:#1689e8;--navy:#2939a0;--orange:#cf5424;--purple:#6924a4}
+*{box-sizing:border-box}body{margin:0;overflow:hidden}main{max-width:1390px;height:100dvh;margin:auto;padding:clamp(8px,2.5vh,26px) clamp(8px,3vw,42px);display:flex;flex-direction:column;gap:clamp(4px,1vh,10px)}
+header{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+h1,h2,p{margin:0}h1{font-size:clamp(18px,2.1vw,25px);letter-spacing:-.025em;line-height:1.1}h2{font-size:20px}
+.muted{color:#50637d}
+label{display:grid;gap:4px;font-size:14px;font-weight:700}select{font:inherit;color:inherit;background:#fff;border:1px solid #b6c6da;border-radius:9px;padding:8px 30px 8px 12px;min-width:175px}
+.metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px}
+.card,.panel{background:#fff;border:1px solid #d9e3ef;border-radius:14px}
+.card{padding:5px 10px;line-height:1.15}.card span{display:block;font-size:12px;color:#50637d}.card strong{font-size:18px;font-variant-numeric:tabular-nums}
+.panel{padding:clamp(8px,1.1vw,14px);flex:1;min-height:0;display:flex;flex-direction:column}.legend{display:flex;gap:8px 18px;flex-wrap:wrap;margin:5px 0;color:#334760;font-size:14px}.legend span{display:flex;align-items:center;gap:6px}
+.key{width:12px;height:12px;border-radius:3px;background:var(--key)}.line{width:18px;height:3px}
+.graph{position:relative;flex:1;min-height:0}.plot{position:relative;height:100%}canvas{display:block;width:100%;height:100%}.day-buttons{position:absolute;display:grid;grid-template-columns:repeat(15,1fr);inset:20px 20px 47px 60px}
+.day-buttons button{background:transparent;border:0;padding:0;cursor:crosshair}.day-buttons button:focus-visible{outline:2px solid var(--purple);outline-offset:-3px}
+.tooltip{position:absolute;z-index:1;pointer-events:none;min-width:183px;background:#13273e;color:white;padding:10px 13px;border-radius:9px;font-size:14px;box-shadow:0 5px 12px #13273e33}.tooltip[hidden]{display:none}
+
+@media(max-width:620px){h1{font-size:19px}header{gap:4px}select{min-width:115px;padding:4px 7px}.metrics{grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}.card{padding:3px 6px}.card span{font-size:11px}.card strong{font-size:17px}.legend{font-size:11px;gap:3px 9px;margin:5px 0}h2{font-size:16px}.day-buttons{left:38px;right:8px}}
+@media(max-height:530px){header{gap:4px}h1{font-size:18px}.card{padding:2px 6px}.card span{font-size:11px}.card strong{font-size:16px}.legend{margin:3px 0;font-size:11px}h2{font-size:15px}}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div><h1>Daily plan renewals</h1></div>
+    <label for="pack">Package<select id="pack"></select></label>
+  </header>
+  <section id="metrics" class="metrics" aria-label="Period totals" aria-live="polite"></section>
+  <section class="panel" aria-labelledby="chartTitle">
+    <h2 id="chartTitle">Renewal rate by expiry date</h2>
+    <div class="legend" aria-label="Chart legend">
+      <span><i class="key" style="--key:var(--blue)"></i> Early (X−7)</span>
+      <span><i class="key" style="--key:var(--navy)"></i> On expiry date</span>
+      <span><i class="key" style="--key:var(--orange)"></i> After expiry (X+6)</span>
+      <span><i class="key line" style="--key:var(--purple)"></i> Takeup rate</span>
+    </div>
+    <div class="graph"><div class="plot">
+      <canvas id="chart" role="img" aria-label="Stacked daily renewal rates and takeup line. Focus a date button for exact values."></canvas>
+      <div class="day-buttons" id="days" aria-label="Daily chart values"></div>
+      <div class="tooltip" id="tip" aria-hidden="true" hidden></div>
+    </div></div>
+  </section>
+</main>
+<script id="export" type="application/json">[["2026-10-17",198,46721,12806,2663,12359,27828],["2026-10-18",198,45439,12108,2681,12366,27155],["2026-10-19",198,41860,11394,2993,10548,24935],["2026-10-20",198,37143,10201,2580,9620,22401],["2026-10-21",198,51021,13755,3752,13024,30531],["2026-10-22",198,46443,12632,3244,11664,27540],["2026-10-23",198,44859,12127,3317,11028,26472],["2026-10-24",198,46079,12718,3157,11498,27373],["2026-10-25",198,50444,14103,2174,14090,30367],["2026-10-26",198,28622,7732,2211,7138,17081],["2026-10-27",198,41911,11433,3051,10872,25356],["2026-10-28",198,50979,13800,3831,13102,30733],["2026-10-29",198,48088,13178,3370,12259,28807],["2026-10-30",198,48944,13275,3642,12324,29241],["2026-10-31",198,46812,12604,3308,12518,28430],["2026-10-17",249,628,67,14,41,122],["2026-10-18",249,627,77,13,39,129],["2026-10-19",249,572,64,14,39,117],["2026-10-20",249,533,63,16,44,123],["2026-10-21",249,720,79,20,52,151],["2026-10-22",249,679,71,10,40,121],["2026-10-23",249,651,81,18,52,151],["2026-10-24",249,655,66,21,58,145],["2026-10-25",249,690,81,12,66,159],["2026-10-26",249,519,70,15,39,124],["2026-10-27",249,545,60,11,45,116],["2026-10-28",249,706,82,34,45,161],["2026-10-29",249,637,70,11,43,124],["2026-10-30",249,698,89,19,77,185],["2026-10-31",249,628,78,20,57,155],["2026-10-17",333,2513,125,25,68,218],["2026-10-18",333,2520,112,17,67,196],["2026-10-19",333,2156,133,24,79,236],["2026-10-20",333,1446,115,13,60,188],["2026-10-21",333,2538,120,20,87,227],["2026-10-22",333,2807,115,23,71,209],["2026-10-23",333,3230,106,22,67,195],["2026-10-24",333,2068,132,21,58,211],["2026-10-25",333,2680,125,18,91,234],["2026-10-26",333,1356,105,18,53,176],["2026-10-27",333,1724,111,28,72,211],["2026-10-28",333,2505,129,36,90,255],["2026-10-29",333,2430,126,29,87,242],["2026-10-30",333,2878,129,22,81,232],["2026-10-31",333,1971,129,30,87,246],["2026-10-17",398,1967,140,272,542,954],["2026-10-18",398,2013,141,300,526,967],["2026-10-19",398,1836,118,303,475,896],["2026-10-20",398,1709,103,308,483,894],["2026-10-21",398,2327,155,407,613,1175],["2026-10-22",398,1923,119,309,560,988],["2026-10-23",398,1961,148,351,524,1023],["2026-10-24",398,2039,161,363,524,1048],["2026-10-25",398,2325,179,276,761,1216],["2026-10-26",398,1401,82,269,340,691],["2026-10-27",398,1853,137,326,496,959],["2026-10-28",398,2260,175,392,575,1142],["2026-10-29",398,2122,144,357,576,1077],["2026-10-30",398,2154,132,362,611,1105],["2026-10-31",398,2334,163,421,634,1218],["2026-10-17",444,110,10,2,7,19],["2026-10-18",444,84,7,2,5,14],["2026-10-19",444,91,14,10,7,31],["2026-10-20",444,100,9,4,10,23],["2026-10-21",444,92,9,5,4,18],["2026-10-22",444,94,11,6,6,23],["2026-10-23",444,97,10,5,9,24],["2026-10-24",444,86,5,0,9,14],["2026-10-25",444,111,11,5,12,28],["2026-10-26",444,76,8,2,5,15],["2026-10-27",444,74,6,1,7,14],["2026-10-28",444,90,7,4,10,21],["2026-10-29",444,97,10,3,11,24],["2026-10-30",444,101,12,3,6,21],["2026-10-31",444,109,11,4,16,31],["2026-10-17",501,207,28,42,79,149],["2026-10-18",501,204,31,41,71,143],["2026-10-19",501,197,17,56,73,146],["2026-10-20",501,176,24,39,63,126],["2026-10-21",501,263,25,62,106,193],["2026-10-22",501,195,31,41,72,144],["2026-10-23",501,206,28,45,68,141],["2026-10-24",501,246,42,60,79,181],["2026-10-25",501,292,44,44,139,227],["2026-10-26",501,134,22,37,38,97],["2026-10-27",501,192,26,48,66,140],["2026-10-28",501,299,46,84,93,223],["2026-10-29",501,219,36,55,66,157],["2026-10-30",501,225,27,46,85,158],["2026-10-31",501,296,23,15,164,202],["2026-10-17",542,219,21,59,83,163],["2026-10-18",542,222,12,71,83,166],["2026-10-19",542,172,14,58,64,136],["2026-10-20",542,204,12,68,75,155],["2026-10-21",542,282,22,103,81,206],["2026-10-22",542,195,14,74,62,150],["2026-10-23",542,239,29,85,72,186],["2026-10-24",542,254,30,79,87,196],["2026-10-25",542,270,21,64,140,225],["2026-10-26",542,148,15,47,49,111],["2026-10-27",542,228,21,88,70,179],["2026-10-28",542,263,27,86,88,201],["2026-10-29",542,270,27,91,87,205],["2026-10-30",542,285,27,105,100,232],["2026-10-31",542,256,17,68,107,192],["2026-10-17",555,2467,598,147,466,1211],["2026-10-18",555,2596,569,194,467,1230],["2026-10-19",555,2361,546,165,408,1119],["2026-10-20",555,2107,498,155,388,1041],["2026-10-21",555,2812,621,213,535,1369],["2026-10-22",555,2551,606,198,451,1255],["2026-10-23",555,2505,581,222,453,1256],["2026-10-24",555,2515,614,202,488,1304],["2026-10-25",555,2946,697,204,633,1534],["2026-10-26",555,2000,519,151,352,1022],["2026-10-27",555,2402,590,199,486,1275],["2026-10-28",555,2811,701,264,501,1466],["2026-10-29",555,2685,653,232,468,1353],["2026-10-30",555,2739,658,258,508,1424],["2026-10-31",555,2647,667,233,508,1408],["2026-10-17",646,314,25,16,57,98],["2026-10-18",646,362,31,31,59,121],["2026-10-19",646,362,32,21,67,120],["2026-10-20",646,356,30,29,56,115],["2026-10-21",646,401,35,40,69,144],["2026-10-22",646,388,48,29,68,145],["2026-10-23",646,360,39,33,60,132],["2026-10-24",646,354,33,36,52,121],["2026-10-25",646,433,44,32,72,148],["2026-10-26",646,338,33,27,48,108],["2026-10-27",646,403,49,32,84,165],["2026-10-28",646,410,30,38,71,139],["2026-10-29",646,323,38,28,48,114],["2026-10-30",646,408,40,44,77,161],["2026-10-31",646,398,55,24,74,153],["2026-10-17",647,1505,229,178,394,801],["2026-10-18",647,1438,160,201,377,738],["2026-10-19",647,1388,161,235,354,750],["2026-10-20",647,1471,174,233,365,772],["2026-10-21",647,1821,218,281,480,979],["2026-10-22",647,1532,186,252,383,821],["2026-10-23",647,1483,182,268,362,812],["2026-10-24",647,1554,216,246,385,847],["2026-10-25",647,1847,310,222,536,1068],["2026-10-26",647,1232,160,206,297,663],["2026-10-27",647,1532,238,247,354,839],["2026-10-28",647,1702,241,288,426,955],["2026-10-29",647,1515,238,244,368,850],["2026-10-30",647,1618,235,272,437,944],["2026-10-31",647,1623,214,248,425,887],["2026-10-17",648,23,3,4,3,10],["2026-10-18",648,38,3,10,10,23],["2026-10-19",648,27,1,7,2,10],["2026-10-20",648,27,1,3,7,11],["2026-10-21",648,36,4,8,7,19],["2026-10-22",648,27,2,4,6,12],["2026-10-23",648,41,5,12,7,24],["2026-10-24",648,37,2,9,8,19],["2026-10-25",648,42,8,5,8,21],["2026-10-26",648,25,1,5,6,12],["2026-10-27",648,30,1,8,8,17],["2026-10-28",648,55,4,9,13,26],["2026-10-29",648,50,3,8,12,23],["2026-10-30",648,22,2,4,3,9],["2026-10-31",648,32,1,5,10,16],["2026-10-17",649,673,94,106,174,374],["2026-10-18",649,717,79,127,170,376],["2026-10-19",649,670,65,136,148,349],["2026-10-20",649,716,81,136,179,396],["2026-10-21",649,835,98,181,191,470],["2026-10-22",649,775,93,158,172,423],["2026-10-23",649,747,109,159,148,416],["2026-10-24",649,774,118,146,175,439],["2026-10-25",649,867,135,155,212,502],["2026-10-26",649,633,93,135,122,350],["2026-10-27",649,766,120,137,171,428],["2026-10-28",649,832,118,181,169,468],["2026-10-29",649,748,97,150,185,432],["2026-10-30",649,794,113,173,179,465],["2026-10-31",649,749,99,145,186,430],["2026-10-17",667,5253,121,1256,2114,3491],["2026-10-18",667,5380,103,1405,2178,3686],["2026-10-19",667,4887,89,1446,1820,3355],["2026-10-20",667,4610,59,1451,1684,3194],["2026-10-21",667,6756,130,2242,2368,4740],["2026-10-22",667,5673,114,1700,2056,3870],["2026-10-23",667,5559,119,1779,1948,3846],["2026-10-24",667,5706,138,1730,2066,3934],["2026-10-25",667,6535,219,1403,2954,4576],["2026-10-26",667,3551,72,1085,1299,2456],["2026-10-27",667,5007,106,1582,1747,3435],["2026-10-28",667,6144,166,1898,2154,4218],["2026-10-29",667,5637,124,1795,1990,3909],["2026-10-30",667,6383,111,2109,2343,4563],["2026-10-31",667,6295,124,2011,2287,4422],["2026-10-17",699,11901,1823,1283,3355,6461],["2026-10-18",699,11709,1637,1379,3381,6397],["2026-10-19",699,11505,1688,1520,3159,6367],["2026-10-20",699,11003,1600,1453,3097,6150],["2026-10-21",699,13761,1916,1897,3997,7810],["2026-10-22",699,11927,1785,1568,3284,6637],["2026-10-23",699,11700,1719,1620,3196,6535],["2026-10-24",699,12189,1943,1631,3339,6913],["2026-10-25",699,13966,2305,1425,4281,8011],["2026-10-26",699,9436,1459,1366,2525,5350],["2026-10-27",699,12049,1924,1696,3220,6840],["2026-10-28",699,13261,2117,1836,3547,7500],["2026-10-29",699,12224,1842,1613,3362,6817],["2026-10-30",699,12429,1921,1748,3415,7084],["2026-10-31",699,12417,1820,1643,3676,7139],["2026-10-17",799,82,20,11,14,45],["2026-10-18",799,76,24,5,12,41],["2026-10-19",799,66,18,8,9,35],["2026-10-20",799,59,20,4,10,34],["2026-10-21",799,80,22,7,14,43],["2026-10-22",799,122,16,9,15,40],["2026-10-23",799,77,19,8,17,44],["2026-10-24",799,66,15,13,11,39],["2026-10-25",799,70,13,6,18,37],["2026-10-26",799,63,19,7,6,32],["2026-10-27",799,76,21,8,25,54],["2026-10-28",799,80,25,4,13,42],["2026-10-29",799,88,26,9,16,51],["2026-10-30",799,87,21,11,21,53],["2026-10-31",799,76,18,15,12,45],["2026-10-17",954,105,14,3,7,24],["2026-10-18",954,107,7,4,9,20],["2026-10-19",954,104,15,2,7,24],["2026-10-20",954,94,12,6,5,23],["2026-10-21",954,123,12,6,7,25],["2026-10-22",954,100,9,6,8,23],["2026-10-23",954,101,15,5,11,31],["2026-10-24",954,92,14,4,8,26],["2026-10-25",954,131,13,7,8,28],["2026-10-26",954,83,11,4,7,22],["2026-10-27",954,99,10,6,6,22],["2026-10-28",954,126,14,7,10,31],["2026-10-29",954,99,10,4,5,19],["2026-10-30",954,111,12,6,9,27],["2026-10-31",954,119,15,8,6,29],["2026-10-17",1278,9264,1472,1825,2191,5488],["2026-10-18",1278,9741,1387,2162,2381,5930],["2026-10-19",1278,9312,1297,2139,2236,5672],["2026-10-20",1278,9047,1246,2207,2092,5545],["2026-10-21",1278,11775,1481,3169,2707,7357],["2026-10-22",1278,9607,1395,2308,2203,5906],["2026-10-23",1278,9526,1285,2572,2022,5879],["2026-10-24",1278,9997,1534,2402,2249,6185],["2026-10-25",1278,12390,1981,2458,3298,7737],["2026-10-26",1278,7751,1203,1952,1560,4715],["2026-10-27",1278,9724,1583,2399,1991,5973],["2026-10-28",1278,10504,1686,2641,2137,6464],["2026-10-29",1278,9656,1547,2371,2046,5964],["2026-10-30",1278,10435,1574,2634,2235,6443],["2026-10-31",1278,10072,1569,2365,2275,6209],["2026-10-17",1555,21,2,6,1,9],["2026-10-18",1555,12,0,4,2,6],["2026-10-19",1555,20,0,3,6,9],["2026-10-20",1555,25,3,4,1,8],["2026-10-21",1555,27,1,10,0,11],["2026-10-22",1555,18,0,5,3,8],["2026-10-23",1555,27,1,6,0,7],["2026-10-24",1555,28,1,9,1,11],["2026-10-25",1555,32,4,6,5,15],["2026-10-26",1555,21,1,7,1,9],["2026-10-27",1555,29,1,8,3,12],["2026-10-28",1555,16,0,5,0,5],["2026-10-29",1555,19,0,4,2,6],["2026-10-30",1555,19,0,7,1,8],["2026-10-31",1555,18,0,4,2,6],["2026-10-17",1598,29609,3559,10663,8295,22517],["2026-10-18",1598,29871,3061,11461,8540,23062],["2026-10-19",1598,29183,2972,11713,7828,22513],["2026-10-20",1598,28573,2989,11901,7524,22414],["2026-10-21",1598,35032,3094,15691,9007,27792],["2026-10-22",1598,29032,2957,11783,7557,22297],["2026-10-23",1598,30038,3226,13002,7231,23459],["2026-10-24",1598,32631,3628,13834,8176,25638],["2026-10-25",1598,39538,4535,15085,11862,31482],["2026-10-26",1598,27614,3019,11939,6533,21491],["2026-10-27",1598,30152,3460,13172,7061,23693],["2026-10-28",1598,32918,3737,14060,7827,25624],["2026-10-29",1598,31911,3595,13652,7576,24823],["2026-10-30",1598,34840,3862,14667,8725,27254],["2026-10-31",1598,33925,3878,13690,9042,26610],["2026-10-17",1989,1472,276,545,278,1099],["2026-10-18",1989,1456,232,574,267,1073],["2026-10-19",1989,1407,185,575,284,1044],["2026-10-20",1989,1406,199,606,268,1073],["2026-10-21",1989,1660,200,749,302,1251],["2026-10-22",1989,1471,188,638,271,1097],["2026-10-23",1989,1634,246,711,282,1239],["2026-10-24",1989,1638,279,711,277,1267],["2026-10-25",1989,2157,339,856,447,1642],["2026-10-26",1989,1554,221,672,274,1167],["2026-10-27",1989,1690,261,727,297,1285],["2026-10-28",1989,1692,242,758,276,1276],["2026-10-29",1989,1694,273,734,276,1283],["2026-10-30",1989,1775,288,697,306,1291],["2026-10-31",1989,1652,281,653,311,1245]]</script>
+<script>
+"use strict";
+const rows = JSON.parse(document.querySelector("#export").textContent);
+const pack = document.querySelector("#pack");
+const canvas = document.querySelector("#chart");
+const plot = canvas.parentElement;
+const context = canvas.getContext("2d");
+const tip = document.querySelector("#tip");
+const colors = ["#1689e8", "#2939a0", "#cf5424", "#6924a4"];
+const number = new Intl.NumberFormat("en-US");
+const percent = new Intl.NumberFormat("en-US", {style:"percent",minimumFractionDigits:1,maximumFractionDigits:1});
+const wholePercent = new Intl.NumberFormat('en-US', {style:'percent'});
+const packs = [...new Set(rows.map(row => row[1]))].sort((a,b) => a-b);
+const dates = [...new Set(rows.map(row => row[0]))].sort();
+const ratio = (count, base) => base ? count/base : 0;
+const add = (totals, counts) => totals.map((value, index) => value + counts[index]);
+let series = [];
+
+pack.add(new Option("All packages", "all"));
+for (const item of packs) pack.add(new Option(String(item), item));
+pack.value = packs.includes(555) ? "555" : "all";
+
+function draw() {
+  if (!series.length) return;
+  const width = canvas.clientWidth, height = canvas.clientHeight;
+  const scale = window.devicePixelRatio || 1;
+  canvas.width = width * scale;
+  canvas.height = height * scale;
+  context.setTransform(scale,0,0,scale,0,0);
+  const compact = window.innerWidth <= 620;
+  const left = compact ? 38 : 60, right = compact ? 8 : 20, top = 20, bottom = height - 47;
+  const step = (width-left-right)/series.length;
+  const max = Math.max(.2, Math.ceil(Math.max(...series.map(d => ratio(d.counts[4],d.counts[0]))) * 10 + .6)/10);
+  const y = rate => bottom - rate/max*(bottom-top);
+  context.font = (compact ? "10px" : "13px") + " system-ui";
+  for (let tick=0; tick<=Math.round(max*10); tick++) {
+    const py = y(tick/10);
+    context.strokeStyle = "#dce6f1";
+    context.beginPath(); context.moveTo(left,py); context.lineTo(width-right,py); context.stroke();
+    context.fillStyle = "#50637d"; context.textAlign = "right";
+    context.fillText(tick*10 + "%",left-9,py+4);
+  }
+  const points = [];
+  series.forEach(({date,counts}, i) => {
+    const [base, early, onDate, after, takeup] = counts;
+    const x = left + (i+.5)*step;
+    let stacked = 0;
+    [early,onDate,after].forEach((count,index) => {
+      const value = ratio(count,base);
+      const start = y(stacked);
+      stacked += value;
+      const end = y(stacked);
+      context.fillStyle = colors[index];
+      context.fillRect(x-step*.36,end,step*.72,start-end);
+      if (index === 1 || (start-end >= 24 && step >= 36)) {
+        const label = (value*100).toFixed(0)+"%";
+        const center = (start+end)/2;
+        context.save();
+        context.font = (step < 28 ? "9px" : "13px") + " system-ui";
+        context.textAlign = "center";
+        context.textBaseline = "middle";
+        if (index === 1 && start-end < 18) {
+          const badgeWidth = Math.min(step - 2, context.measureText(label).width + 6);
+          context.fillStyle = colors[1];
+          context.fillRect(x-badgeWidth/2,center-8,badgeWidth,16);
+        }
+        context.fillStyle = "white";
+        context.fillText(label,x,center,Math.max(1,step-3));
+        context.restore();
+      }
+    });
+    context.fillStyle = "#50637d"; context.textAlign = "center";
+    context.fillText(date.slice(-2),x,bottom+22);
+    points.push([x,y(ratio(takeup,base)),ratio(takeup,base)]);
+  });
+  context.strokeStyle = colors[3]; context.lineWidth = 2.5;
+  context.beginPath();
+  points.forEach(([x,py],i) => i ? context.lineTo(x,py) : context.moveTo(x,py));
+  context.stroke();
+  context.fillStyle = colors[3];
+  context.textAlign = "center";
+  points.forEach(([x,py,rate]) => {
+    context.beginPath(); context.arc(x,py,3.6,0,2*Math.PI); context.fill();
+    if (step >= 36) context.fillText((rate*100).toFixed(0)+"%",x,py-10);
+  });
+  context.fillStyle = "#50637d";
+  context.fillText("October 2026",width/2,height-7);
+}
+
+function refresh() {
+  const byDate = new Map(dates.map(date => [date,[0,0,0,0,0]]));
+  for (const [date, item, ...counts] of rows) {
+    if (pack.value === "all" || Number(pack.value) === item)
+      byDate.set(date,add(byDate.get(date),counts));
+  }
+  series = [...byDate].map(([date,counts]) => ({date,counts}));
+  const [base,early,onDate,after,takeup] = series.reduce((total,d) => add(total,d.counts),[0,0,0,0,0]);
+  const stats = [["Avg. daily expiry base",number.format(Math.round(base / series.length))],["Early renewal",wholePercent.format(ratio(early,base))],
+    ["On expiry date",wholePercent.format(ratio(onDate,base))],["After expiry",wholePercent.format(ratio(after,base))],
+    ["Takeup rate",wholePercent.format(ratio(takeup,base))]];
+  document.querySelector("#metrics").innerHTML = stats.map(([label,value]) =>
+    '<div class="card"><span>'+label+'</span><strong>'+value+'</strong></div>').join("");
+  tip.hidden = true;
+  const buttons = document.querySelector("#days");
+  buttons.replaceChildren();
+  series.forEach(({date,counts},index) => {
+    const [base,...renewals] = counts;
+    const metrics = renewals.map(count => number.format(count)+" ("+percent.format(ratio(count,base))+")");
+    const label = "Oct " + date.slice(-2);
+    const lines = [label, "Base "+number.format(base), ...metrics.map((metric,i) =>
+      ["Early ","On expiry ","After expiry ","Takeup "][i]+metric)];
+    const button = document.createElement("button");
+    button.type = "button";
+    button.setAttribute("aria-label",lines.join(", "));
+    const show = () => {
+      tip.innerHTML = lines.join("<br>");
+      tip.hidden = false;
+      tip.style.top = "24px";
+      tip.style.left = Math.max(5,Math.min(button.offsetLeft+buttons.offsetLeft,plot.clientWidth-tip.offsetWidth-8))+"px";
+    };
+    button.addEventListener("mouseenter",show);
+    button.addEventListener("focus",show);
+    button.addEventListener("click",show);
+    for (const event of ["mouseleave","blur"]) button.addEventListener(event,() => {tip.hidden=true;});
+    button.addEventListener("keydown",event => {
+      if (event.key === "Escape") tip.hidden=true;
+      const offset = {"ArrowLeft":-1,"ArrowRight":1}[event.key];
+      if (offset) {event.preventDefault(); buttons.children[index+offset]?.focus();}
+    });
+    buttons.append(button);
+  });
+  draw();
+}
+pack.addEventListener("change",refresh);
+new ResizeObserver(draw).observe(plot);
+refresh();
+</script>
+</body>
+</html>
